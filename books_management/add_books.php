@@ -4,6 +4,7 @@
 	<title>Books Management</title>
 </head>
 <body>
+<a href="book_listing.php">Listing</a>
 <center>
 <h1>Add Books</h1>
 <form method="post" action="controller.php">

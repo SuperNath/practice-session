@@ -1,44 +1,44 @@
 <?php
 
+require_once("model.php");
+
 class Books
 {
-	public function __construct()
+	public function addBooks($a,$b,$c)
 	{
-		$local = "localhost";
-		$db = "books";
-		$user = "root";
-		$pass = "";
+		$mod1 = new Model();
+		$success = $mod1->insert($a,$b,$c);
 
-		try
+		if($success)
 		{
-			$conn = new PDO("mysql:host = $local;dbname = $db",$user,$pass);
-			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			//echo "Connected Successfully";
-		}
-		catch(PDOException $e)
-		{
-			echo "Connection Failed:".$e->getMessage();
+			header("location:add_books.php");
 		}
 	}
 
-	public function addBooks($book_name,$author_name,$publisher_name)
+	public function updateBooks($a,$b,$c,$d)
 	{
-		$local = "localhost";
-		$db = "books";
-		$user = "root";
-		$pass = "";
+		$mod2 = new Model();
+		$success = $mod2->update($a,$b,$c,$d);
 
-		try
+		if($success)
 		{
-			$conn = new PDO("mysql:host = $local;dbname = $db",$user,$pass);
-			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$insert = "INSERT INTO `library` (`book_name`,`author_name`,`publisher_name`) VALUES ('$book_name','$author_name','$publisher_name')";
-			$conn->exec($insert);
+			header("location:book_listing.php");
 		}
-		catch(PDOException $e)
-	    {
-	    	echo $insert."<br>".$e->getMessage();
-	    }
+	}
+
+	public function searchBooks($a)
+	{
+		$mod3 = new Model();
+		$success = $mod3->search($a);
+
+		if($success)
+		{
+			header("location:book_listing.php?search=$a");
+		}
+		else
+		{
+			header("location:book_listing.php?search=not found");
+		}
 	}
 }
 
@@ -51,4 +51,21 @@ if(isset($_POST["submit"]))
 	$publisher_name = $_POST["publisher"];
 
 	$books->addBooks($book_name,$author_name,$publisher_name);
+}
+
+if(isset($_POST["update"]))
+{
+	$book_name = $_POST["book_name"];
+	$author_name = $_POST["author"];
+	$publisher_name = $_POST["publisher"];
+	$hid_id = $_POST["hid_id"];
+
+	$books->updateBooks($book_name,$author_name,$publisher_name,$hid_id);
+}
+
+if(isset($_POST["search"]))
+{
+	$search_name = $_POST["search_value"];
+
+	$books->searchBooks($search_name);
 }
