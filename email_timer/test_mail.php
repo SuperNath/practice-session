@@ -26,8 +26,8 @@ ini_set('display_errors','ON');
 	//Send HTML or Plain Text email
 	$mail->isHTML(true);
 
-	$mail->Subject = 'Here is the subject';
-	$mail->Body    = 'This is the HTML message body <b> in Bold </b>';
+	$mail->Subject = 'New Mail';
+	$mail->Body    = '<b> Supratik Nath </b>';
 	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 	if(!$mail->send()) {
@@ -37,6 +37,6 @@ ini_set('display_errors','ON');
 	}
 
 	//$mail->send();
-	echo '<p>Message has been sent</p>';
+	echo '<p id="">Message has been sent</p>';
 	
 ?>

@@ -1,5 +1,7 @@
 <?php
-	include_once("../../../../../usr/share/php/libphp-phpmailer/class.phpmailer.php");
+	//include_once("../../../../../usr/share/php/libphp-phpmailer/class.phpmailer.php");
+
+	$dbconn = new mysqli("localhost","root","root","email_recieve");
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,8 +61,8 @@
 		//Send HTML or Plain Text email
 		$mail->isHTML(true);
 
-		$mail->Subject = 'Here is the subject';
-		$mail->Body    = 'This is the HTML message body <b> in Bold </b>';
+		$mail->Subject = 'New Mail';
+		$mail->Body    = '<b> Supratik Nath </b>';
 		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 		if(!$mail->send()) {
@@ -68,6 +70,9 @@
 		   echo 'Mailer Error: ' . $mail->ErrorInfo;
 		   exit;
 		}
+
+		/*$sql = "INSERT INTO `email_data` (`subject`,`body`) VALUES ('$mail->Subject','$mail->Body')";
+		$dbconn->query($sql);*/
 
 		//$mail->send();
 		echo '<p id="send" style="color:green;font-weight:bold;font-size:120px;">Message has been sent</p>';
